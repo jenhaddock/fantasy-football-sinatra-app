@@ -12,3 +12,5 @@ require_relative 'app/controllers/songs_controller'
 
 use Rack::MethodOverride
 run ApplicationController
+use UsersController
+use TeamController
