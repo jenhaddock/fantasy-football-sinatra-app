@@ -12,6 +12,14 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/login' do
+    if Helpers.is_logged_in?(session)
+      erb :'users/index'
+    else
+      erb :'users/login'
+    end
+  end
+
   post '/signup' do
     if params[:username] != "" && params[:email] != "" && params[:password] != ""
       @user = User.create(:username => params[:username], :password => params[:password])
