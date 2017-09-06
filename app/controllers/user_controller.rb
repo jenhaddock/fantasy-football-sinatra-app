@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   get '/signup' do
     if Helpers.is_logged_in?(session)
-      erb :'users/index'
+      redirect to '/index'
     else
       erb :'users/create_user'
     end
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   get '/login' do
     if Helpers.is_logged_in?(session)
-      erb :'users/index'
+      redirect to ''
     else
       erb :'users/login'
     end
@@ -22,6 +22,7 @@ class UsersController < ApplicationController
 
   get '/index' do
     if Helpers.is_logged_in?(session)
+      @user = User.find_by(:id => session["user_id"])
       erb :'users/index'
     else
       erb :'users/login'
@@ -29,10 +30,12 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    if params[:username] != "" && params[:email] != "" && params[:password] != ""
+    @user = User.find_by(:username => params[:username])
+    #come back and test
+    if params[:username] != "" && params[:email] != "" && params[:password] != ""  && @user == nil
       @user = User.create(:username => params[:username], :password => params[:password])
       session[:user_id] = @user.id
-      erb :'users/index'
+      redirect to '/index'
     else
       redirect to '/signup'
     end
