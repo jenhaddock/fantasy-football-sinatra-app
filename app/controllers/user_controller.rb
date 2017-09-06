@@ -5,7 +5,21 @@ class UsersController < ApplicationController
   end
 
   get '/signup' do
-    erb :'users/create_user'
+    if Helpers.is_logged_in?(session)
+      erb :'users/index'
+    else
+      erb :'users/create_user'
+    end
+  end
+
+  post '/signup' do
+    if params[:username] != "" && params[:email] != "" && params[:password] != ""
+      @user = User.create(:username => params[:username], :password => params[:password])
+      session[:user_id] = @user.id
+      erb :'users/index'
+    else
+      redirect to '/signup'
+    end
   end
 
 end
