@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   get '/login' do
     if Helpers.is_logged_in?(session)
-      redirect to ''
+      redirect to '/index'
     else
       erb :'users/login'
     end
@@ -42,6 +42,7 @@ class UsersController < ApplicationController
 
   post '/signup' do
     @user = User.find_by(:username => params[:username])
+    #if user exists, flash message
     #come back and test
     if params[:username] != "" && params[:email] != "" && params[:password] != ""  && @user == nil
       @user = User.create(:username => params[:username], :password => params[:password])

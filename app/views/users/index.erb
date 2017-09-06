@@ -1,4 +1,4 @@
-<h1><%= @user.username %> "'s Fantasy Teams"></h1>
+<h1><%= @user.username %>'s Fantasy Teams</h1>
 <ul>
   <%@user.teams.each do |t|%>
      <li><a href="/team/<%=t.slug%>"><%=t.name %></a></li>
