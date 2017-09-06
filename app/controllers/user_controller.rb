@@ -4,4 +4,8 @@ class UsersController < ApplicationController
     set :views, 'app/views'
   end
 
+  get '/signup' do
+    erb :'users/create_user'
+  end
+
 end
