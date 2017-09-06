@@ -29,6 +29,17 @@ class UsersController < ApplicationController
     end
   end
 
+  #user by slug?
+
+  get '/logout' do
+    if Helpers.is_logged_in?(session)
+     session.clear
+     redirect to '/login'
+   else
+     redirect to '/'
+   end
+  end
+
   post '/signup' do
     @user = User.find_by(:username => params[:username])
     #come back and test
