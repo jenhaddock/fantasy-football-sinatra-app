@@ -11,23 +11,24 @@ class TeamController < ApplicationController
     else
       erb :homepage
     end
+  end
 
-    get '/teams/:slug/edit' do
-      if Helpers.is_logged_in?(session)
-        @team = Team.find_by_slug(params["slug"])
-        if session[:user_id] == @team.user_id
-          erb :'teams/edit'
-        else
-          erb :'users/index'
-        end
+  get '/teams/:slug/edit' do
+    if Helpers.is_logged_in?(session)
+      @team = Team.find_by_slug(params["slug"])
+      if session[:user_id] == @team.user_id
+        erb :'teams/edit'
       else
-        redirect to '/login'
+        erb :'users/index'
       end
+    else
+      redirect to '/login'
     end
+  end
 
-    post '/teams/:id' do
-      @team = Team.find(params[:id])
-      @team.save
-      redirect to "teams/show"
-    end
+  post '/teams/:id' do
+    @team = Team.find(params[:id])
+    @team.save
+    redirect to "teams/show"
+  end
 end
