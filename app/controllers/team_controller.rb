@@ -11,6 +11,17 @@ class TeamController < ApplicationController
     else
       erb :homepage
     end
-  end
 
+    get '/teams/:id/edit' do
+      if Helpers.is_logged_in?(session)
+        @team = Team.find_by(params[:id])
+        if session[:user_id] == @team.user_id
+          erb :'teams/edit'
+        else
+          erb :'users/index'
+        end
+      else
+        redirect to '/login'
+      end
+    end
 end
