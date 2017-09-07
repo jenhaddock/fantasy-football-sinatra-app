@@ -12,9 +12,9 @@ class TeamController < ApplicationController
       erb :homepage
     end
 
-    get '/teams/:id/edit' do
+    get '/teams/:slug/edit' do
       if Helpers.is_logged_in?(session)
-        @team = Team.find_by(params[:id])
+        @team = Team.find_by_slug(params["slug"])
         if session[:user_id] == @team.user_id
           erb :'teams/edit'
         else

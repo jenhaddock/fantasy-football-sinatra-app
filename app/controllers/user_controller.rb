@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 
   post '/signup' do
     if User.find_by(:name => params[:name])
-#      flash[:message] = "User already exists."
+      flash[:message] = "User already exists."
       redirect to '/login'
     end
     if params[:name] != "" && params[:email] != "" && params[:password] != ""
