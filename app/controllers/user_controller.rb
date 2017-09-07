@@ -3,6 +3,7 @@ class UsersController < ApplicationController
     set :public_folder, 'public'
     set :views, 'app/views'
   end
+#      use Rack::Flash
 
   get '/signup' do
     if Helpers.is_logged_in?(session)
@@ -29,7 +30,14 @@ class UsersController < ApplicationController
     end
   end
 
-  #user by slug?
+  get '/users/:slug' do
+    if Helpers.is_logged_in?(session)
+      @user = User.find_by_slug(params["slug"])
+      erb :'users/index'
+    else
+      erb :homepage
+    end
+  end
 
   get '/logout' do
     if Helpers.is_logged_in?(session)
@@ -41,10 +49,11 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    @user = User.find_by(:name => params[:name])
-    #if user exists, flash message
-    #come back and test
-    if params[:name] != "" && params[:email] != "" && params[:password] != ""  && @user == nil
+    if User.find_by(:name => params[:name])
+#      flash[:message] = "User already exists."
+      redirect to '/login'
+    end
+    if params[:name] != "" && params[:email] != "" && params[:password] != ""
       @user = User.create(:name => params[:name], :password => params[:password])
       session[:user_id] = @user.id
       redirect to '/index'
