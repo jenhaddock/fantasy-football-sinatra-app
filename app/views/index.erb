@@ -1,0 +1,6 @@
+<h1>Fantasy Teams</h1>
+<ul>
+  <%Team.all.each do |t|%>
+     <li><a href="/users/<%=t.user_id.slug%>"><%=t.user_id.name%> - <a href="/team/<%=t.slug%>"><%=t.name %></a></li>
+  <%end%>
+</ul>
