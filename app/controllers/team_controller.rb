@@ -24,4 +24,10 @@ class TeamController < ApplicationController
         redirect to '/login'
       end
     end
+
+    post '/teams/:id' do
+      @team = Team.find(params[:id])
+      @team.save
+      redirect to "teams/show"
+    end
 end

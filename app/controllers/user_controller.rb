@@ -1,9 +1,11 @@
+require 'rack-flash'
+
 class UsersController < ApplicationController
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
   end
-#      use Rack::Flash
+  use Rack::Flash
 
   get '/signup' do
     if Helpers.is_logged_in?(session)
