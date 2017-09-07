@@ -41,11 +41,11 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    @user = User.find_by(:username => params[:username])
+    @user = User.find_by(:name => params[:name])
     #if user exists, flash message
     #come back and test
-    if params[:username] != "" && params[:email] != "" && params[:password] != ""  && @user == nil
-      @user = User.create(:username => params[:username], :password => params[:password])
+    if params[:name] != "" && params[:email] != "" && params[:password] != ""  && @user == nil
+      @user = User.create(:name => params[:name], :password => params[:password])
       session[:user_id] = @user.id
       redirect to '/index'
     else
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
-    @user = User.find_by(:username => params[:username])
+    @user = User.find_by(:name => params[:name])
     if @user != nil && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect to '/index'
