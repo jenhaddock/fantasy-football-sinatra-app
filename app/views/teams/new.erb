@@ -1,0 +1,13 @@
+<form action="/teams" method="post">
+
+  Name: <input id="Name" type="text" name="name"><br>
+  Available Players:
+  <ul>
+    <%Team.all.each |p|%>
+      <%if p.team_id == nil%>
+        <li><input type="checkbox" name="player_id" id="<%=p.id%>" value="<%=p.id%>"><%=p.name%> - <%=p.position%> - <%=p.pro_team%></input></li>
+      <%end%>
+    <%end%>
+  </ul>
+  <button type="submit" value="Create">Create</button>
+</form>
