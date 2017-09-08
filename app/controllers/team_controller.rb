@@ -36,9 +36,9 @@ class TeamController < ApplicationController
 
   post '/teams' do
     @team = Team.create(:name => params[:name], :user_id => session["user_id"])
-    @player = Player.all.find{|p| p.id == params["player_id"]}
-    @team.player = @player
-		@team.save
+    @player = Player.find_by(:id => params["player_id"])
+    @player.team_id = @team.id
+		@player.save
     redirect to "/teams/#{@team.slug}"
   end
 

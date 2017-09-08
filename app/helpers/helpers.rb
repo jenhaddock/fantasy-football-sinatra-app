@@ -8,11 +8,4 @@ class Helpers
     User.find_by(id: session_hash[:user_id]) != nil
   end
 
-  def slug
-    name.downcase.gsub(' ', '-')
-  end
-
-  def self.find_by_slug(slug)
-    self.all.detect{|a| a.name.downcase.gsub(' ', '-') == slug}
-  end
 end

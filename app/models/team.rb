@@ -1,4 +1,7 @@
 class Team < ActiveRecord::Base
-    belongs_to :user
-    has_many :players
+  extend Concerns::Slugify
+  include Concerns::Slugify
+
+  belongs_to :user
+  has_many :players
 end

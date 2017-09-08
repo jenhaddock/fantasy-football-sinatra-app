@@ -60,6 +60,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/index'
     else
+      flash[:message] = "Must fill in all fields."
       redirect to '/signup'
     end
   end
@@ -70,6 +71,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/index'
     else
+      flash[:message] = "Invalid Password or Username."
       redirect to '/login'
     end
   end
