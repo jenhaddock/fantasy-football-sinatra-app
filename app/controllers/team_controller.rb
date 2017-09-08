@@ -4,6 +4,14 @@ class TeamController < ApplicationController
     set :views, 'app/views'
   end
 
+  get '/teams/new' do
+    if Helpers.is_logged_in?(session)
+      erb :'teams/new'
+    else
+      erb :'users/login'
+    end
+  end
+
   get '/teams/:slug' do
     if Helpers.is_logged_in?(session)
       @team = Team.find_by_slug(params["slug"])
@@ -24,6 +32,14 @@ class TeamController < ApplicationController
     else
       redirect to '/login'
     end
+  end
+
+  post '/teams' do
+    @team = Team.create(:name => params[:name], :user_id => session["user_id"])
+    @player = Player.all.find{|p| p.id == params["player_id"]}
+    @team.player = @player
+		@team.save
+    redirect to "/teams/#{@team.slug}"
   end
 
   post '/teams/:id' do
