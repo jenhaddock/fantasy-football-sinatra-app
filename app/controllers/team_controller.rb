@@ -36,13 +36,15 @@ class TeamController < ApplicationController
 
   post '/teams' do
     if Team.find_by(:name => params[:name])
+      @team = Team.find_by(:name => params[:name])
       flash[:message] = "Team already exists."
-      redirect to "/teams/#{Team.id}/edit"
+      redirect to "/teams/#{@team.slug}/edit"
     end
     @team = Team.create(:name => params[:name], :user_id => session["user_id"])
     @player = Player.find_by(:id => params["player_id"])
     @player.team_id = @team.id
 		@player.save
+
     redirect to "/teams/#{@team.slug}"
   end
 

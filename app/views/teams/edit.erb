@@ -5,14 +5,14 @@
 <h1>Update <%=@team.name%></h1>
 <form action="/teams/<%=@team.id%>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
-  Players:
+  Players:<br>
   <ul>
-    <%@team.players.each do |p|%>
-      <li><input type="checkbox" name="team[player_id][]" id="<%=p.name%>" value="<%=p.id%>"><%='checked'%><%=p.name%> - <%=p.position%> - <%=p.pro_team%></input></li>
+    <%@team.players.each do |player|%>
+      <input type="checkbox" name="team[player_id][]" id="<%=player.id%>" value="<%=player.id%>"><%='checked'%><%=player.name%> - <%=player.position%> - <%=player.pro_team%><br>
     <%end%>
-    <%Team.all.each |p|%>
-      <%if p.team_id == nil%>
-        <li><input type="checkbox" name="team[player_id][]" id="<%=p.name%>" value="<%=p.id%>"><%=p.name%> - <%=p.position%> - <%=p.pro_team%></input></li>
+    <%Player.all.each do |player|%>
+      <%if player.team_id == nil%>
+        <input type="checkbox" name="team[player_id][]" id="<%=player.id%>" value="<%=player.id%>"><%=player.name%> - <%=player.position%> - <%=player.pro_team%><br>
       <%end%>
     <%end%>
   </ul>
