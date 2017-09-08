@@ -41,16 +41,21 @@ class TeamController < ApplicationController
       redirect to "/teams/#{@team.slug}/edit"
     end
     @team = Team.create(:name => params[:name], :user_id => session["user_id"])
-    @player = Player.find_by(:id => params["player_id"])
-    @player.team_id = @team.id
-		@player.save
-
+    params["team"]["player_ids"].each do |player|
+      @player = Player.find_by(:id => player.to_i )
+      @team.players << @player
+    end
+    @team.save
     redirect to "/teams/#{@team.slug}"
   end
 
-  post '/teams/:id' do
+  patch '/teams/:id' do
     @team = Team.find(params[:id])
+    params["team"]["player_ids"].each do |player|
+      @player = Player.find_by(:id => player.to_i )
+      @team.players << @player
+    end
     @team.save
-    redirect to "teams/show"
+    redirect to "/teams/#{@team.slug}"
   end
 end
