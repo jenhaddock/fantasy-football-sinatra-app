@@ -1,3 +1,7 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1>Update <%=@team.name%></h1>
 <form action="/teams/<%=@team.id%>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
