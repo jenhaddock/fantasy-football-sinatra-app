@@ -2,9 +2,9 @@
 <ul>
   <%Team.all.each do |t|%>
      <%@user = User.find_by(:id => t.user_id)%>
-     <li><a href="/users/<%=@user.slug%>"><%=@user.slug%></a> - <a href="/teams/<%=t.slug%>"><%=t.name %></a></li>
+     <li><a href="/users/<%=@user.slug%>"><%=@user.name%></a> - <a href="/teams/<%=t.slug%>"><%=t.name %></a></li>
   <%end%>
 </ul>
 
-<br></br><br></br><br></br>
+<br></br>
 <h3><a href="/logout">Log Out</a></h3>
