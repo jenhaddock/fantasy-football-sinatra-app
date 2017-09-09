@@ -10,7 +10,7 @@ describe UsersController do
 
     it 'signup directs user to index' do
       params = {
-        :username => "FantasyWinner",
+        :name => "FantasyWinner",
         :email => "GoTeam@aol.com",
         :password => "SuperBowl"
       }
@@ -18,6 +18,35 @@ describe UsersController do
       expect(last_response.location).to include("/index")
     end
 
+      it 'does not let a user sign up without a username' do
+        params = {
+          :name => "",
+          :email => "GoTeam@aol.com",
+          :password => "SuperBowl"
+        }
+        post '/signup', params
+        expect(last_response.location).to include('/signup')
+      end
+
+      it 'does not let a user sign up without an email' do
+        params = {
+          :name => "FantasyWinner",
+          :email => "",
+          :password => "SuperBowl"
+        }
+        post '/signup', params
+        expect(last_response.location).to include('/signup')
+      end
+
+      it 'does not let a user sign up without a password' do
+        params = {
+          :name => "FantasyWinner",
+          :email => "GoTeam@aol.com",
+          :password => ""
+        }
+        post '/signup', params
+        expect(last_response.location).to include('/signup')
+      end
 
 
   end
