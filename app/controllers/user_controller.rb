@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   get '/index' do
     if Helpers.is_logged_in?(session)
       @user = User.find_by(:id => session["user_id"])
-      erb :'users/index'
+      erb :'users/user_index'
     else
       erb :'users/login'
     end
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   get '/users/:slug' do
     if Helpers.is_logged_in?(session)
       @user = User.find_by_slug(params["slug"])
-      erb :'users/index'
+      erb :'users/user_index'
     else
       erb :homepage
     end

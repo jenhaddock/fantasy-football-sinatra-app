@@ -22,12 +22,14 @@ class TeamController < ApplicationController
   end
 
   get '/teams/:slug/edit' do
+    binding.pry
     if Helpers.is_logged_in?(session)
       @team = Team.find_by_slug(params["slug"])
       if session[:user_id] == @team.user_id
         erb :'teams/edit'
       else
-        erb :'users/index'
+        @user = User.find_by(:id => session[:user_id])
+        erb :'users/user_index'
       end
     else
       redirect to '/login'
