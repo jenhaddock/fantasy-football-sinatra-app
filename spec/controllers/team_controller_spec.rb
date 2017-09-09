@@ -20,5 +20,14 @@ require 'spec_helper'
         expect(last_response.body).to include("Okay QB")
         expect(last_response.body).to include("Horrible DE")
       end
+
+      context 'logged out' do
+        it 'does not let a user view the team info if not logged in' do
+          get '/logout'
+
+          get "/teams/first-team"
+          expect(last_response.body).to include("Welcome")
+        end
+      end
     end
 end

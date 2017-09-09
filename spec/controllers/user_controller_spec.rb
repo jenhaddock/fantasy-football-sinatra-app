@@ -147,6 +147,14 @@ describe UsersController do
       expect(last_response.body).to include("First Team")
       expect(last_response.body).to include("Second Team")
     end
-  end
 
+    context 'logged out' do
+      it 'does not let a user view their team info if not logged in' do
+        get '/logout'
+
+        get "/users/fantasy-winner"
+        expect(last_response.body).to include("Welcome")
+      end
+    end
+  end
 end
