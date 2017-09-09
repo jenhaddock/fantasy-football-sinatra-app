@@ -69,4 +69,39 @@ describe UsersController do
         expect(last_response.location).to include('/login')
       end
   end
+
+  describe "login" do
+    it 'loads the login page' do
+      get '/login'
+      expect(last_response.status).to eq(200)
+    end
+
+    it 'loads the index after login' do
+      user = User.create(:name => "I Love Football", :email => "GoTeam@aol.com", :password => "SuperBowl")
+      params = {
+        :name => "I Love Football",
+        :password => "SuperBowl"
+      }
+      post '/login', params
+      expect(last_response.status).to eq(302)
+      follow_redirect!
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to include("Fantasy Teams")
+    end
+
+    it 'does not let user view login page if already logged in' do
+      user = User.create(:name => "I Love Football", :email => "GoTeam@aol.com", :password => "SuperBowl")
+
+      params = {
+        :name => "I Love Football",
+        :password => "SuperBowl"
+      }
+      post '/login', params
+      session = {}
+      session[:user_id] = user.id
+      get '/login'
+      expect(last_response.location).to include("/index")
+    end
+  end
+
 end
