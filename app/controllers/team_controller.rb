@@ -22,7 +22,6 @@ class TeamController < ApplicationController
   end
 
   get '/teams/:slug/edit' do
-    binding.pry
     if Helpers.is_logged_in?(session)
       @team = Team.find_by_slug(params["slug"])
       if session[:user_id] == @team.user_id
