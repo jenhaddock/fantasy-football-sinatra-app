@@ -112,4 +112,29 @@ describe UsersController do
     end
   end
 
+  describe "logout" do
+    it "lets a user logout if they are already logged in" do
+      user = User.create(:name => "FantasyWinner", :email => "GoTeam@aol.com", :password => "SuperBowl")
+
+      params = {
+        :name => "FantasyWinner",
+        :password => "SuperBowl"
+      }
+      post '/login', params
+      get '/logout'
+      expect(last_response.location).to include("/login")
+    end
+
+    it 'does not let a user logout if not logged in' do
+      get '/logout'
+      expect(last_response.location).to include("/")
+    end
+
+    it 'does not load user team page if user not logged in' do
+      get '/index'
+      binding.pry
+      expect(last_response.location).to include("/login")
+    end
+  end
+
 end
