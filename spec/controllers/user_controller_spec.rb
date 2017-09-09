@@ -129,11 +129,23 @@ describe UsersController do
       get '/logout'
       expect(last_response.location).to include("/")
     end
+  end
 
-    it 'does not load user team page if user not logged in' do
-      get '/index'
-      binding.pry
-      expect(last_response.location).to include("/login")
+  describe 'user index page' do
+    it 'shows all a single users teams' do
+      user = User.create(:name => "FantasyWinner", :email => "GoTeam@aol.com", :password => "SuperBowl")
+      team1 = Team.create(:name => "First Team", :user_id => user.id)
+      team2 = Team.create(:name => "Second Team", :user_id => user.id)
+      params = {
+        :name => "FantasyWinner",
+        :password => "SuperBowl"
+      }
+      post '/login', params
+
+      get "/users/#{user.slug}"
+
+      expect(last_response.body).to include("First Team")
+      expect(last_response.body).to include("Second Team")
     end
   end
 
