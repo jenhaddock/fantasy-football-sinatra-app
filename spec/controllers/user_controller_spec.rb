@@ -48,6 +48,25 @@ describe UsersController do
         expect(last_response.location).to include('/signup')
       end
 
+      it 'does not let a logged in user view the signup page' do
+        user = User.create(:name => "FantasyWinner", :email => "GoTeam@aol.com", :password => "SuperBowl")
+        params = {
+          :name => "FantasyWinner",
+          :password => "SuperBowl"
+        }
+        post '/login', params
+        expect(last_response.location).to include('/index')
+      end
 
+      it 'does not create duplicate user names' do
+        user = User.create(:name => "FantasyWinner", :email => "GoTeam@aol.com", :password => "SuperBowl")
+        params = {
+          :name => "FantasyWinner",
+          :email => "GoTeam@aol.com",
+          :password => "SuperBowl"
+        }
+        post '/signup', params
+        expect(last_response.location).to include('/login')
+      end
   end
 end
