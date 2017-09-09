@@ -97,10 +97,18 @@ describe UsersController do
         :password => "SuperBowl"
       }
       post '/login', params
-      session = {}
-      session[:user_id] = user.id
-      get '/login'
       expect(last_response.location).to include("/index")
+    end
+
+    it 'does not let user sign in with invalid password' do
+      user = User.create(:name => "I Love Football", :email => "GoTeam@aol.com", :password => "SuperBowl")
+
+      params = {
+        :name => "I Love Football",
+        :password => "BlahBlah"
+      }
+      post '/login', params
+      expect(last_response.location).to include("/login")
     end
   end
 
