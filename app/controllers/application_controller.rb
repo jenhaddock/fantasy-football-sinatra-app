@@ -8,7 +8,6 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     if Helpers.is_logged_in?(session)
-      binding.pry
       erb :index
     else
       erb :homepage
